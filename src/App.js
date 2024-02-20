@@ -6,11 +6,9 @@ import Dashboard from './components/Dashboard';
 import Layout from "./components/Header/Layout.jsx";
 import Login from "./components/Login.jsx";
 import Register from './components/Register.jsx';
-import { initializeApp } from "firebase/app";
-import firebaseConfig from "./firebase/firebaseConfig";
 
-// Initialize Firebase
-initializeApp(firebaseConfig);
+
+
 
 function App() {
   const handleRegisterSuccess = () => {

@@ -1,17 +1,20 @@
+// Register.jsx
 import React, { useState } from "react";
 import { Box, Button, Input, Text } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import firebase from "../firebase/firebase"; // Ensure this path is correct
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { auth } from "../firebase/firebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
 
 function RegisterPage({ onRegisterSuccess }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  const navigate = useNavigate();
   const handleRegister = async () => {
     try {
-      const auth = firebase.auth(); // Get the auth instance
-      await auth.createUserWithEmailAndPassword(email, password);
+      await createUserWithEmailAndPassword(auth,email,password);
+      navigate("/login");
       onRegisterSuccess(); // Call the callback function passed from the parent component
     } catch (error) {
       setError(error.message);
