@@ -1,20 +1,22 @@
 import React, { useState } from "react";
 import { Box, Button, Input, Text } from "@chakra-ui/react";
-import { Link } from "react-router-dom"; // Import Link from React Router
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate from React Router
+import { signInWithEmailAndPassword } from "firebase/auth"; // Import signInWithEmailAndPassword method from Firebase Auth
+import { auth } from "../firebase/firebaseConfig"; // Import the 'auth' object from Firebase
 
 function LoginPage() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState(""); // Change 'username' to 'email'
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate(); // Use useNavigate to navigate programmatically
 
-  const handleLogin = () => {
-    // Here you can implement your login logic
-    if (username === "admin" && password === "password") {
-      // Successful login
+  const handleLogin = async () => { // Make handleLogin asynchronous
+    try {
+      await signInWithEmailAndPassword(auth, email, password); // Use signInWithEmailAndPassword to authenticate user
+      navigate("/"); // Navigate to home page after successful login
       console.log("Login successful");
-    } else {
-      // Failed login
-      setError("Invalid username or password");
+    } catch (error) {
+      setError(error.message);
     }
   };
 
@@ -32,9 +34,9 @@ function LoginPage() {
         Login
       </Text>
       <Input
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Email" // Change 'Username' to 'Email'
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         mb="2"
       />
       <Input

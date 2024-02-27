@@ -6,7 +6,7 @@ import Dashboard from './components/Dashboard';
 import Layout from "./components/Header/Layout.jsx";
 import Login from "./components/Login.jsx";
 import Register from './components/Register.jsx';
-
+import Myprofile from './components/Myprofile';
 
 
 
@@ -23,6 +23,7 @@ function App() {
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register onRegisterSuccess={handleRegisterSuccess} />} />
+          <Route path='/Myprofile' element={<Myprofile/>}/>
         </Routes>
       </Layout>
     </div>
