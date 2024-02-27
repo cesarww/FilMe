@@ -39,7 +39,7 @@ function Dashboard(props) {
                         },
                         headers: {
                             accept: 'application/json',
-                            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYjNiMWFlNTgyNWU4YTA2ZmJlYTI4ZDMwMWI5ZGFlNyIsInN1YiI6IjY1Yjk3NzViMzM0NGM2MDE4NTkyNWIyNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.6S8fMWeF356Xzi5I45KW-5axE4sOCItFlKFUPGGAuqo' // Replace YOUR_API_KEY with your actual API key
+                            Authorization: 'Bearer' // Replace YOUR_API_KEY with your actual API key
                         }
                     });
                 } else {
@@ -50,7 +50,7 @@ function Dashboard(props) {
                         },
                         headers: {
                             accept: 'application/json',
-                            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYjNiMWFlNTgyNWU4YTA2ZmJlYTI4ZDMwMWI5ZGFlNyIsInN1YiI6IjY1Yjk3NzViMzM0NGM2MDE4NTkyNWIyNiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.6S8fMWeF356Xzi5I45KW-5axE4sOCItFlKFUPGGAuqo' // Replace YOUR_API_KEY with your actual API key
+                            Authorization: 'Bearer' // Replace YOUR_API_KEY with your actual API key
                         }
                     });
                 }
