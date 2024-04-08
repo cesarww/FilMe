@@ -1,57 +1,41 @@
 import React, { useState } from "react";
-import { Box, Button, Input, Text } from "@chakra-ui/react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate from React Router
-import { signInWithEmailAndPassword } from "firebase/auth"; // Import signInWithEmailAndPassword method from Firebase Auth
-import { auth } from "../firebase/firebaseConfig"; // Import the 'auth' object from Firebase
+import { Link, useNavigate } from "react-router-dom"; 
+import { signInWithEmailAndPassword } from "firebase/auth"; 
+import { auth } from "../firebase/firebaseConfig"; 
+import logo from './Landing/assets/img/navbar-logo.png'
+import { Box, Button, Center, Flex, Input } from "@chakra-ui/react";
+import bg from './Landing/assets/img/header-bg.webp'
 
 function LoginPage() {
-  const [email, setEmail] = useState(""); // Change 'username' to 'email'
+  const [email, setEmail] = useState(""); 
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Use useNavigate to navigate programmatically
+  const navigate = useNavigate(); 
 
-  const handleLogin = async () => { // Make handleLogin asynchronous
+  const handleLogin = async (e) => {
+    e.preventDefault(); // Prevent default form submission
     try {
-      await signInWithEmailAndPassword(auth, email, password); // Use signInWithEmailAndPassword to authenticate user
-      navigate("/"); // Navigate to home page after successful login
-      console.log("Login successful");
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      console.log("User logged in:", user); 
+      navigate("/dashboard"); // Navigate to the dashboard after successful login
     } catch (error) {
-      setError(error.message);
+      setError(error.message); // Set error message if login fails
     }
   };
 
   return (
-    <Box
-      maxW="400px"
-      m="auto"
-      p="4"
-      borderWidth="1px"
-      borderRadius="lg"
-      boxShadow="lg"
-      textAlign="center"
-    >
-      <Text fontSize="2xl" fontWeight="bold" mb="4">
-        Login
-      </Text>
-      <Input
-        placeholder="Email" // Change 'Username' to 'Email'
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        mb="2"
-      />
-      <Input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        mb="2"
-      />
-      {error && <Text color="red.500" mb="2">{error}</Text>}
-      <Button colorScheme="blue" onClick={handleLogin}>
-        Login
-      </Button>
-      <Button as={Link} to="/register" colorScheme="green" ml="2">Register</Button> {/* Register button */}
-    </Box>
+    <Flex w={'100%'} height={'100vh'} alignItems={'center'} justifyContent={'center'} backgroundImage={bg} backgroundPosition={'center'} backgroundSize={'cover'}>   
+      <Box w={'35%'} bg={'rgba(0, 0, 0, 0.9)'} p={10}>
+        <Flex justifyContent={'center'}><img width={'300'} src={logo} alt="" /></Flex>
+        <form className="content__form" onSubmit={handleLogin}>
+            <Input color={'whitesmoke'} required="" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+            <Input color={'whitesmoke'} mt={5} required="" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <hr />
+            <Button type="submit">LogIn</Button>
+        </form>
+      </Box>
+    </Flex>
   );
 }
 

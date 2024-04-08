@@ -2,27 +2,30 @@ import React, { useState, useEffect } from "react";
 import { Box, Flex, Input } from "@chakra-ui/react";
 import axios from 'axios';
 import CardPeli from "./CardPeli";
-import "./styles/Dashboard.css";
 import { auth } from "../firebase/firebaseConfig"; // Import the 'auth' object from Firebase
+import { onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import NavBarApp from "./NavbarApp";
+import bg from './Landing/assets/img/header-bg.webp'
 
 function Dashboard(props) {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [userLoggedIn, setUserLoggedIn] = useState(false); // State to track user login status
+    const navigate = useNavigate();
+   
 
     useEffect(() => {
         // Check if user is logged in
-        const unsubscribe = auth.onAuthStateChanged((user) => {
+        onAuthStateChanged(auth,(user) => {
             if (user) {
-                // User is logged in
-                setUserLoggedIn(true);
+               
             } else {
-                // User is not logged in
-                setUserLoggedIn(false);
+                navigate('/')
             }
         });
 
-        return () => unsubscribe(); // Cleanup function to unsubscribe from the auth state listener
+        
     }, []);
 
     useEffect(() => {
@@ -39,7 +42,7 @@ function Dashboard(props) {
                         },
                         headers: {
                             accept: 'application/json',
-                            Authorization: 'Bearer' // Replace YOUR_API_KEY with your actual API key
+                            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNGY5ZTgxZmIyOTU4YzFmOTM1ZTU4YzczNjIyN2ViNSIsInN1YiI6IjY1Y2FjMjExZTE5NGIwMDE4NDRkYWNmYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.s3jwoJOmHb_p4Cpbm8mhZ7U2N_BsNYv36SK7AIw9vGs'
                         }
                     });
                 } else {
@@ -50,7 +53,7 @@ function Dashboard(props) {
                         },
                         headers: {
                             accept: 'application/json',
-                            Authorization: 'Bearer' // Replace YOUR_API_KEY with your actual API key
+                            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNGY5ZTgxZmIyOTU4YzFmOTM1ZTU4YzczNjIyN2ViNSIsInN1YiI6IjY1Y2FjMjExZTE5NGIwMDE4NDRkYWNmYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.s3jwoJOmHb_p4Cpbm8mhZ7U2N_BsNYv36SK7AIw9vGs'
                         }
                     });
                 }
@@ -68,24 +71,28 @@ function Dashboard(props) {
     };
 
     // Render the Dashboard only if the user is logged in
-    return userLoggedIn ? (
-        <Box className="dashboard-container" padding={10} w={'100%'}>
-             <Input className="search-input" boxShadow={'md'} w={'100%'} type="text" placeholder="Busca tu peli favorita ..." onChange={handleInputChange} value={searchTerm}/>
-             <Flex className="movies-container" justifyContent={'space-evenly'} alignItems={'center'} flexWrap={'wrap'}>
-                 {searchResults.map((movie, index) => (
-                     <CardPeli
-                         key={index}
-                         title={movie.title}
-                         imageUrl= {movie.poster_path}
-                         synopsis={movie.overview}
-                         vote_average={movie.vote_average}
-                         vote_count={movie.vote_count}
-                         id={movie.id}
-                     />
-                 ))}
-             </Flex>
-        </Box> 
-    ) : null; // Render null if user is not logged in
+    return  (
+        <Box w={'100%'} backgroundImage={bg} backgroundPosition={'center'} backgroundSize={'cover'}>
+            <NavBarApp/>
+            <br /><br /><br /><br /><br />
+            <Box className="dashboard-container"  padding={10} w={'100%'}>
+                <Input className="search-input" boxShadow={'md'} w={'100%'} type="text" placeholder="Busca tu peli favorita ..." onChange={handleInputChange} value={searchTerm}/>
+                <Flex mt={30} className="movies-container" justifyContent={'space-evenly'} alignItems={'center'} flexWrap={'wrap'}>
+                    {searchResults.map((movie, index) => (
+                        <CardPeli
+                            key={index}
+                            title={movie.title}
+                            imageUrl= {movie.poster_path}
+                            synopsis={movie.overview}
+                            vote_average={movie.vote_average}
+                            vote_count={movie.vote_count}
+                            id={movie.id}
+                        />
+                    ))}
+                </Flex>
+            </Box> 
+        </Box>
+    ) 
 }
 
 export default Dashboard;

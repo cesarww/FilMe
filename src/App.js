@@ -1,12 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
 import { Route, Routes,BrowserRouter as Router, Switch } from 'react-router-dom';
-import Home from './components/Home';
 import Dashboard from './components/Dashboard';
-import Layout from "./components/Header/Layout.jsx";
 import Login from "./components/Login.jsx";
 import Register from './components/Register.jsx';
-import Myprofile from './components/Myprofile';
+import Myprofile from './components/Perfil/Myprofile.jsx';
+import Landing from './components/Landing/Landig.jsx';
 
 
 
@@ -17,15 +16,14 @@ function App() {
   };
   return (
     <div className="App">
-      <Layout>
         <Routes>
-          <Route path='/' element={<Home/>}/>
+          <Route path='/' element={<Landing/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register onRegisterSuccess={handleRegisterSuccess} />} />
           <Route path='/Myprofile' element={<Myprofile/>}/>
         </Routes>
-      </Layout>
+
     </div>
   );
 }
