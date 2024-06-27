@@ -60,7 +60,8 @@ function Myprofile() {
       await addDoc(playlistsRef, {
         playlistName: playlistName.trim(),
         createdAt: Timestamp.now(),
-      });
+        peliculas: [], // Inicializa el campo de películas como un arreglo vacío
+      }); 
 
       // Reset the playlist name input field
       setPlaylistName("");
@@ -102,7 +103,7 @@ function Myprofile() {
                 </Flex>
                 <div class="row justify-content-center">
                   {playlists.map((playlist) => (
-                    <Playlist id = {playlist.id} name= {playlist.playlistName}/>
+                    <Playlist id = {playlist.id} name= {playlist.playlistName} peliculas = {playlist.peliculas} fetchPlaylists={fetchPlaylists}/>
                   ))}
                 </div>
             </div>

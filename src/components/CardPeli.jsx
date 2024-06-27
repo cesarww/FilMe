@@ -1,4 +1,5 @@
 import { Card, CardHeader, CardBody, CardFooter, Image, Text, Heading, Stack, Divider, StatGroup, Stat, StatLabel, StatNumber, StatHelpText, StatArrow, Flex, Button } from '@chakra-ui/react'
+import DrawerForm from './DrawerForm';
 
 function CardPeli(props) {
     return ( 
@@ -22,7 +23,7 @@ function CardPeli(props) {
                 <CardBody>
                     <Flex justifyContent={'space-between'}>
                         <Heading size='md'>{props.title}</Heading>
-                        <Button bg={'green'} color={'white'}>+</Button>
+                        <DrawerForm title={props.title} peliculaid={props.id}/>
                     </Flex>
                     
 
